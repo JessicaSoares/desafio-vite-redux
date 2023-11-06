@@ -1,5 +1,7 @@
 import  { useState } from 'react'
 
+import { Button } from '@mui/material'
+
 import Header from '@/components/Header'
 
 import reactLogo from './assets/react.svg'
@@ -7,14 +9,18 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
 import './App.css'
+import { DatePicker } from '@mui/x-date-pickers'
 
 function App() {
 
   const [count, setCount] = useState(0)
+
+  const [contar, setContar] = useState(0)
   return (
     <>
       <div>
         <Header />
+        <DatePicker label="Basic date picker" />
         <a href="https://vitejs.dev" 
           target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -26,11 +32,25 @@ function App() {
       <h1>Vite + React</h1>
       <div
        className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        
+        <Button color='primary' variant='contained' onClick={() => setCount((count) => count + 5)}>
           count is 
           {' '}
           {count}
-        </button>
+        </Button>
+
+        <div>
+          <p>
+            Você clicou
+            {' '}
+            {contar}
+            {' '}
+            vezes
+          </p>
+          <button onClick={() => setContar(contar + 5)}>
+            Clique aqui
+          </button>
+        </div>
         <p>
           Edit 
           {' '}
