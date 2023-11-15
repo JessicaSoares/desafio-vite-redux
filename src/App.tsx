@@ -1,25 +1,51 @@
-import  { useState } from 'react'
+import  { useState, useEffect } from 'react'
 
 import { Button } from '@mui/material'
-
-import Header from '@/components/Header'
-
-import reactLogo from './assets/react.svg'
-
-import viteLogo from '/vite.svg'
 
 import './App.css'
 import { DatePicker } from '@mui/x-date-pickers'
 
+import reactLogo from './assets/react.svg'
+import { Loading } from './components/Loading'
+
+import viteLogo from '/vite.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { addNewTodo} from './redux/actions/todo.action'
+import { Dispatch } from './@types/dispatch'
+import { ReduceType } from './@types/todo.type'
+import { StatusEnum } from './enums/todo.enum'
+
 function App() {
+
+  const dispatch:Dispatch = useDispatch()
+
+  const {todoReducer: {fetching}} = useSelector((state: ReduceType) => state)
+
+  useEffect(() => {
+    //dispatch(getTodos())
+    dispatch(addNewTodo({
+
+      title:'jess',
+      description:'teste',
+      status:StatusEnum.PENDING,
+      date: new Date().toISOString()
+
+
+    }))
+
+
+  }, [])
+
+  const [isLoading,setIsLoading] = useState(false)
 
   const [count, setCount] = useState(0)
 
   const [contar, setContar] = useState(0)
+
   return (
     <>
       <div>
-        <Header />
+        <Loading trigger={fetching}/>
         <DatePicker label="Basic date picker" />
         <a href="https://vitejs.dev" 
           target="_blank" rel="noreferrer">
@@ -33,7 +59,7 @@ function App() {
       <div
        className="card">
         
-        <Button color='primary' variant='contained' onClick={() => setCount((count) => count + 5)}>
+        <Button color='primary' variant='contained'>
           count is 
           {' '}
           {count}

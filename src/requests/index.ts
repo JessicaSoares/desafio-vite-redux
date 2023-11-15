@@ -6,12 +6,12 @@ import { NewTodoType, TodoType, UpdateTodoType } from '@/types/todo.type'
 const getTodosLocalStorage = (): TodoType[] => {
     //const todos = window.localStorage.getItem('todos')
     //return todos ? JSON.parse(todos) : []
-    return JSON.parse(localStorage.getitem(ConstantsEnum.KEY_LOCAL_STORAGE) ?? '[]')
+    return JSON.parse(localStorage.getItem(ConstantsEnum.KEY_LOCAL_STORAGE) ?? '[]')
 }
 
 const saveTodosLocalStorage = (todo: NewTodoType): UpdateTodoType => {
     const todos = getTodosLocalStorage()
-    const newId = todos[todos.length - 1]?.id + 1 ?? 1
+    const newId = todos.length ? todos[todos.length-1].id +1 : 1
     const newTodo = { ...todo, id: newId }
     const updatedTodos = [ ...todos, newTodo]
 
@@ -58,7 +58,7 @@ export const deleteTodo = async (id:number): Promise<UpdateTodoType[]> => {
   
 }
 
-export const getTodos = async (): Promise<TodoType[]> => {
+export const getTodosStorage = async (): Promise<TodoType[]> => {
     return new Promise((resolve) => {
         const todos = getTodosLocalStorage()
         setTimeout(()=> {
